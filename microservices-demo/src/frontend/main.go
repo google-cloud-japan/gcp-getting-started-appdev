@@ -46,7 +46,7 @@ const (
 )
 
 var (
-	whitelistedCurrencies = map[string]bool{
+	allowlistedCurrencies = map[string]bool{
 		"USD": true,
 		"EUR": true,
 		"CAD": true,

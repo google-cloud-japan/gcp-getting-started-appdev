@@ -35,7 +35,7 @@ func (fe *frontendServer) getCurrencies(ctx context.Context) ([]string, error) {
 	}
 	var out []string
 	for _, c := range currs.CurrencyCodes {
-		if _, ok := whitelistedCurrencies[c]; ok {
+		if _, ok := allowlistedCurrencies[c]; ok {
 			out = append(out, c)
 		}
 	}
