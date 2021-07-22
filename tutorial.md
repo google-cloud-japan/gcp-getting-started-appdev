@@ -237,11 +237,11 @@ kubectl apply -f microservices-demo-0.1.4/release/kubernetes-manifests.yaml --na
 以下コマンドで Kubernetes にクーポンサービスをデプロイする為の定義ファイルへ GCP プロジェクト固有の情報を設定する。(FIXME という文字列を GCP プロジェクト ID に置き換える)
 
 ```bash
-sed -i".org" -e "s/FIXME/$GOOGLE_CLOUD_PROJECT/g" ~/cloudshell_open/gcp-getting-started-lab-jp/appdev/microservices-demo/kubernetes-manifests/couponservice.yaml
+sed -i".org" -e "s/FIXME/$GOOGLE_CLOUD_PROJECT/g" ~/cloudshell_open/gcp-getting-started-appdev/microservices-demo/kubernetes-manifests/couponservice.yaml
 ```
 
 ```bash
-sed -i".org" -e "s/FIXME/$GOOGLE_CLOUD_PROJECT/g" ~/cloudshell_open/gcp-getting-started-lab-jp/appdev/microservices-demo/kubernetes-manifests/frontend.yaml
+sed -i".org" -e "s/FIXME/$GOOGLE_CLOUD_PROJECT/g" ~/cloudshell_open/gcp-getting-started-appdev/microservices-demo/kubernetes-manifests/frontend.yaml
 ```
 
 ### Kubernetes 上にデプロイしたデモアプリケーションの動作確認
@@ -279,7 +279,7 @@ http://35.187.195.202/
 ```
 
 取得した URL へアクセスし、アプリケーションにアクセスできることを確認する。
-![BaseApp](https://github.com/GoogleCloudPlatform/gcp-getting-started-lab-jp/blob/master/appdev/tutorial-assets/BaseApp.png?raw=true)
+![BaseApp](https://github.com/google-cloud-japan/gcp-getting-started-appdev/blob/main/tutorial-assets/BaseApp.png?raw=true)
 
 # 2. クーポンサービスの作成
 
@@ -304,7 +304,7 @@ appdev/microservices-demo
 couponservice を Cloud Build を使ってコンテナをビルドし、couponservice:v1 というタグをつけて Container Registry にコンテナを登録する
 
 ```bash
-cd ~/cloudshell_open/gcp-getting-started-lab-jp/appdev/microservices-demo/src/couponservice && gcloud builds submit --tag gcr.io/$GOOGLE_CLOUD_PROJECT/couponservice:v1
+cd ~/cloudshell_open/gcp-getting-started-appdev/microservices-demo/src/couponservice && gcloud builds submit --tag gcr.io/$GOOGLE_CLOUD_PROJECT/couponservice:v1
 ```
 
 ## Kubernetes マニフェストファイルの確認
@@ -312,7 +312,7 @@ cd ~/cloudshell_open/gcp-getting-started-lab-jp/appdev/microservices-demo/src/co
 先ほどビルドしたコンテナ ( couponservice:v1 ) を Kubernetes クラスターにデプロイするための修正がマニフェストファイルに反映されている事を確認する
 
 ```bash
-cat ~/cloudshell_open/gcp-getting-started-lab-jp/appdev/microservices-demo/kubernetes-manifests/couponservice.yaml | grep "couponservice:v1"
+cat ~/cloudshell_open/gcp-getting-started-appdev/microservices-demo/kubernetes-manifests/couponservice.yaml | grep "couponservice:v1"
 ```
 
 出力画面の例
@@ -326,7 +326,7 @@ image: gcr.io/{{project-id}}/couponservice:v1
 以下コマンドを実行し、マニフェストファイルを使って、先程 Container Registry に登録したクーポンサービスのコンテナ ( couponservice:v1 ) を Kubernetes ( GKE ) のクラスター上にデプロイする
 
 ```bash
-kubectl apply -f ~/cloudshell_open/gcp-getting-started-lab-jp/appdev/microservices-demo/kubernetes-manifests/couponservice.yaml --namespace appdev-handson-ns
+kubectl apply -f ~/cloudshell_open/gcp-getting-started-appdev/microservices-demo/kubernetes-manifests/couponservice.yaml --namespace appdev-handson-ns
 ```
 
 以下コマンドを実行し、デプロイされたコンテナの情報を確認します。Container Registry に登録したクーポンサービスのコンテナがデプロイされていることを確認します。
@@ -371,7 +371,7 @@ server:
 frontend を Cloud Build を使ってコンテナをビルドし、frontend:v1 というタグをつけて Container Registry にコンテナを登録します
 
 ```bash
-cd ~/cloudshell_open/gcp-getting-started-lab-jp/appdev/microservices-demo/src/frontend && gcloud builds submit --tag gcr.io/$GOOGLE_CLOUD_PROJECT/frontend:v1
+cd ~/cloudshell_open/gcp-getting-started-appdev/microservices-demo/src/frontend && gcloud builds submit --tag gcr.io/$GOOGLE_CLOUD_PROJECT/frontend:v1
 ```
 
 ## Kubernetes マニフェストファイルの確認
@@ -379,7 +379,7 @@ cd ~/cloudshell_open/gcp-getting-started-lab-jp/appdev/microservices-demo/src/fr
 先ほどビルドしたコンテナ ( frontend:v1 ) を Kubernetes クラスターにデプロイするための修正がマニフェストファイルに反映されている事を確認する
 
 ```bash
-cat ~/cloudshell_open/gcp-getting-started-lab-jp/appdev/microservices-demo/kubernetes-manifests/frontend.yaml | grep "frontend:v1"
+cat ~/cloudshell_open/gcp-getting-started-appdev/microservices-demo/kubernetes-manifests/frontend.yaml | grep "frontend:v1"
 ```
 
 出力画面の例
@@ -393,7 +393,7 @@ image: gcr.io/{{project-id}}/frontend:v1
 以下コマンドを実行し、マニフェストファイルを使って、先程 Container Registry に登録したクーポンサービスのコンテナ ( frontend:v1 ) を Kubernetes ( GKE ) のクラスター上にデプロイする
 
 ```bash
-kubectl apply -f ~/cloudshell_open/gcp-getting-started-lab-jp/appdev/microservices-demo/kubernetes-manifests/frontend.yaml --namespace appdev-handson-ns
+kubectl apply -f ~/cloudshell_open/gcp-getting-started-appdev/microservices-demo/kubernetes-manifests/frontend.yaml --namespace appdev-handson-ns
 ```
 
 以下コマンドを実行し、デプロイされたコンテナの情報を確認します。Container Registry に登録したクーポンサービスのコンテナがデプロイされていることを確認します。
@@ -421,7 +421,7 @@ server:
 echo http://$FRONTEND_IP/
 ```
 
-![V1App](https://github.com/GoogleCloudPlatform/gcp-getting-started-lab-jp/blob/master/appdev/tutorial-assets/V1App.png?raw=true)
+![V1App](https://github.com/google-cloud-japan/gcp-getting-started-appdev/blob/main/tutorial-assets/V1App.png?raw=true)
 
 # 4. クーポンサービスの改善
 
@@ -450,7 +450,7 @@ appdev/microservices-demo/src/couponservice/src/main/java/hipstershop/CouponServ
 130
 ```
 
-<walkthrough-editor-open-file filePath="cloudshell_open/gcp-getting-started-lab-jp/appdev/microservices-demo/src/couponservice/src/main/java/hipstershop/CouponService.java">
+<walkthrough-editor-open-file filePath="cloudshell_open/gcp-getting-started-appdev/microservices-demo/src/couponservice/src/main/java/hipstershop/CouponService.java">
 ファイルを Cloud Shell Editor で開く
 </walkthrough-editor-open-file>
 
@@ -459,7 +459,7 @@ appdev/microservices-demo/src/couponservice/src/main/java/hipstershop/CouponServ
 修正後の couponservice を Cloud Build を使ってコンテナをビルドし、couponservice:v2 というタグをつけて Container Registry にコンテナを登録する
 
 ```bash
-cd ~/cloudshell_open/gcp-getting-started-lab-jp/appdev/microservices-demo/src/couponservice && gcloud builds submit --tag gcr.io/$GOOGLE_CLOUD_PROJECT/couponservice:v2
+cd ~/cloudshell_open/gcp-getting-started-appdev/microservices-demo/src/couponservice && gcloud builds submit --tag gcr.io/$GOOGLE_CLOUD_PROJECT/couponservice:v2
 ```
 
 ## Spanner へのクーポンデータ追加
@@ -483,7 +483,7 @@ echo http://$FRONTEND_IP/
 session-id: 42d37f1b-21cc-4bf8-bd63-1775545e870a
 ```
 
-![CheckSession](https://github.com/GoogleCloudPlatform/gcp-getting-started-lab-jp/blob/master/appdev/tutorial-assets/CheckSession.png?raw=true)
+![CheckSession](https://github.com/google-cloud-japan/gcp-getting-started-appdev/blob/main/tutorial-assets/CheckSession.png?raw=true)
 
 以下コマンドを実行し、環境変数に調べたセッション ID を設定する
 
@@ -519,7 +519,7 @@ image: gcr.io/{{project-id}}/couponservice:v1
 image: gcr.io/{{project-id}}/couponservice:v2
 ```
 
-<walkthrough-editor-open-file filePath="cloudshell_open/gcp-getting-started-lab-jp/appdev/microservices-demo/kubernetes-manifests/couponservice.yaml">
+<walkthrough-editor-open-file filePath="cloudshell_open/gcp-getting-started-appdev/microservices-demo/kubernetes-manifests/couponservice.yaml">
 ファイルを Cloud Shell Editor で開く
 </walkthrough-editor-open-file>
 
@@ -528,7 +528,7 @@ image: gcr.io/{{project-id}}/couponservice:v2
 以下コマンドを実行し、マニフェストファイルを使って、先程 Container Registry に登録したクーポンサービスのコンテナ ( couponservice:v2 ) を Kubernetes ( GKE ) のクラスター上にデプロイします
 
 ```bash
-kubectl apply -f ~/cloudshell_open/gcp-getting-started-lab-jp/appdev/microservices-demo/kubernetes-manifests/couponservice.yaml --namespace appdev-handson-ns
+kubectl apply -f ~/cloudshell_open/gcp-getting-started-appdev/microservices-demo/kubernetes-manifests/couponservice.yaml --namespace appdev-handson-ns
 ```
 
 以下コマンドを実行し、デプロイされたコンテナの情報を確認します。Container Registry に登録したクーポンサービスのコンテナがデプロイされていることを確認します。
@@ -556,7 +556,7 @@ server:
 echo http://$FRONTEND_IP/
 ```
 
-![V2App](https://github.com/GoogleCloudPlatform/gcp-getting-started-lab-jp/blob/master/appdev/tutorial-assets/V2App.png?raw=true)
+![V2App](https://github.com/google-cloud-japan/gcp-getting-started-appdev/blob/main/tutorial-assets/V2App.png?raw=true)
 
 # 5. (Advanced) クーポンサービスの高度化
 
