@@ -1,16 +1,14 @@
-FROM golang:1.12-alpine as builder
-RUN apk add --no-cache ca-certificates git && \
-      wget -qO/go/bin/dep https://github.com/golang/dep/releases/download/v0.5.0/dep-linux-amd64 && \
-      chmod +x /go/bin/dep
+FROM golang:1.15-alpine as builder
+RUN apk add --no-cache git
 
-ENV PROJECT github.com/GoogleCloudPlatform/microservices-demo/src/frontend
+ENV PROJECT github.com/google-cloud-japan/gcp-getting-started-appdev/microservices-demo/src/frontend
 WORKDIR /go/src/$PROJECT
 
 # restore dependencies
-COPY Gopkg.* ./
-RUN dep ensure --vendor-only -v
+COPY go.mod go.sum ./
+RUN go mod download
 COPY . .
-RUN go install .
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /go/bin/frontend .
 
 FROM alpine as release
 RUN apk add --no-cache ca-certificates \
